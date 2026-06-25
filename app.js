@@ -18,7 +18,7 @@ async function init(){
   const res = await fetch(DATA_URL);
   state.graph = cleanGraph(await res.json());
   state.nodes = state.graph.nodes; state.nodesById = state.graph.nodesById; state.adjacency = state.graph.adjacency;
-  el.graphStats.textContent = `${state.nodes.length}명 / 연결 ${state.graph.edges.length}개`;
+  el.graphStats.textContent = `스트리머 총 ${state.nodes.length}명`;
   renderGuessButtons(); renderStreamerSelects(); await renderLeaderboard(); setMode("random");
 }
 function cleanGraph(raw){
