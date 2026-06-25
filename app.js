@@ -1,8 +1,8 @@
 const DATA_URL = "data/soop_graph_undirected.json";
 const SCORE_KEY = "soop-distance-local-top5";
 const MIN_FOLLOWERS_TO_SHOW = 10000;
-const BLOCKED_IDS = new Set(["x"]);
-const BLOCKED_NICKS = new Set(["x", "x"]);
+const BLOCKED_IDS = new Set(["2omong"]);
+const BLOCKED_NICKS = new Set(["이오몽", "이오몽_"]);
 
 const state = { graph:null, nodes:[], nodesById:{}, adjacency:{}, currentRound:null, score:0, gameOver:false, animating:false, mode:"random", supabase:null, useSupabase:false };
 const el = {
@@ -48,7 +48,94 @@ function randomNode(){ return state.nodes[Math.floor(Math.random()*state.nodes.l
 function shortestPath(startId,targetId){ if(startId===targetId) return [startId]; const q=[[startId]], visited=new Set([startId]); while(q.length){ const path=q.shift(), cur=path[path.length-1]; for(const next of state.adjacency[cur]||[]){ if(visited.has(next)) continue; const np=[...path,next]; if(next===targetId) return np; visited.add(next); q.push(np); } } return null; }
 async function submitGuess(value){ if(state.gameOver||state.animating||!state.currentRound) return; state.animating=true; setGuessButtonsEnabled(false); const correct=state.currentRound.distance; const isCorrect=value==="6+" ? correct>=6 : Number(value)===correct; setMessage("연결 경로를 확인하는 중...","wait"); await animatePath(state.currentRound.path); if(isCorrect){ state.score++; updateScoreDisplay(); if(state.mode==="random"){ setMessage(`정답입니다! 실제 거리는 ${correct}단계입니다. +1점`,"good"); await sleep(1200); state.animating=false; if(!state.gameOver) nextRandomRound(); } else { state.gameOver=true; state.animating=false; setMessage(`정답입니다! 실제 거리는 ${correct}단계입니다. 다른 조합을 선택해보세요.`,"good"); await maybeSaveHighScore(state.score); } return; } state.gameOver=true; state.animating=false; setMessage(`틀렸습니다. 정답은 ${correct}단계였습니다. 게임 종료!`,"bad"); await maybeSaveHighScore(state.score); }
 function renderStreamer(side,s){ const img=side==="start"?el.startImage:el.targetImage, name=side==="start"?el.startName:el.targetName, id=side==="start"?el.startId:el.targetId; img.src=s.profileImage||""; img.onerror=()=>img.removeAttribute("src"); name.textContent=s.nick||s.id; id.textContent=s.id; }
-async function animatePath(path){ el.pathBox.innerHTML=""; el.pathBox.classList.remove("hidden"); const title=document.createElement("div"); title.className="path-title"; title.textContent=`실제 연결 경로: ${path.length-1}단계`; el.pathBox.appendChild(title); const track=document.createElement("div"); track.className="path-track"; el.pathBox.appendChild(track); path.forEach((id,i)=>{ const n=state.nodesById[id]||{id,nick:id}; const item=document.createElement("div"); item.className="path-node"; const img=document.createElement("img"); img.src=n.profileImage||""; img.alt=`${n.nick||n.id} 프로필 이미지`; img.onerror=()=>img.removeAttribute("src"); const nm=document.createElement("strong"); nm.textContent=n.nick||n.id; const st=document.createElement("small"); st.textContent=i===0?"시작":`${i}단계`; item.append(img,nm,st); track.appendChild(item); if(i<path.length-1){ const ar=document.createElement("div"); ar.className="path-arrow"; ar.textContent="→"; track.appendChild(ar); } }); const nodes=[...track.querySelectorAll(".path-node")], arrows=[...track.querySelectorAll(".path-arrow")]; for(let i=0;i<nodes.length;i++){ nodes[i].classList.add("active"); await sleep(380); if(arrows[i]){ arrows[i].classList.add("active"); await sleep(260); } } }
+async function animatePath(path){
+  el.pathBox.innerHTML="";
+  el.pathBox.classList.remove("hidden");
+  el.pathBox.classList.add("dynamic-path","progressive-path");
+
+  const title=document.createElement("div");
+  title.className="path-title";
+  title.innerHTML=`<span>연결 추적 중</span><strong>???</strong>`;
+  el.pathBox.appendChild(title);
+
+  const track=document.createElement("div");
+  track.className="path-track dynamic-track progressive-track";
+  el.pathBox.appendChild(track);
+
+  function createNode(id,i){
+    const n=state.nodesById[id]||{id,nick:id};
+
+    const item=document.createElement("div");
+    item.className="path-node dynamic-node progressive-node";
+
+    const ring=document.createElement("div");
+    ring.className="node-ring";
+
+    const img=document.createElement("img");
+    img.src=n.profileImage||"";
+    img.alt=`${n.nick||n.id} 프로필 이미지`;
+    img.onerror=()=>img.removeAttribute("src");
+
+    ring.appendChild(img);
+
+    const nm=document.createElement("strong");
+    nm.textContent=n.nick||n.id;
+
+    const st=document.createElement("small");
+    st.textContent=i===0?"START":`${i} LINK`;
+
+    item.append(ring,nm,st);
+    return item;
+  }
+
+  function createLink(){
+    const link=document.createElement("div");
+    link.className="path-link progressive-link";
+    link.innerHTML=`<span class="link-line"></span><span class="link-runner"></span><span class="link-spark"></span>`;
+    return link;
+  }
+
+  const firstNode=createNode(path[0],0);
+  track.appendChild(firstNode);
+  await sleep(40);
+  firstNode.classList.add("active","current");
+  title.innerHTML=`<span>시작점 확인</span><strong>START</strong>`;
+  await sleep(220);
+
+  for(let i=1;i<path.length;i++){
+    const prev=[...track.querySelectorAll(".path-node")].at(-1);
+    if(prev){
+      prev.classList.remove("current");
+      prev.classList.add("passed");
+    }
+
+    title.innerHTML=`<span>다음 연결 찾는 중</span><strong>${i}번째</strong>`;
+
+    const link=createLink();
+    track.appendChild(link);
+    await sleep(40);
+    link.classList.add("active");
+
+    await sleep(390);
+
+    const node=createNode(path[i],i);
+    track.appendChild(node);
+    await sleep(30);
+    node.classList.add("active","current");
+
+    
+
+    await sleep(250);
+  }
+
+  const nodes=[...track.querySelectorAll(".path-node")];
+  nodes.forEach(n=>n.classList.remove("current"));
+  nodes[nodes.length-1]?.classList.add("finish");
+
+  title.innerHTML=`<span>연결 완료</span><strong>${path.length-1}단계</strong>`;
+
+  await sleep(220);
+}
 function hidePath(){ el.pathBox.innerHTML=""; el.pathBox.classList.add("hidden"); }
 function setMessage(text,type){ el.message.textContent=text; el.message.className="message"; if(type) el.message.classList.add(type); }
 function setGuessButtonsEnabled(enabled){ [...el.guessButtons.querySelectorAll("button")].forEach(b=>b.disabled=!enabled); }
