@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>숲 스트리머 거리 맞추기</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <section class="hero">
+      <p class="eyebrow">SOOP 그래프 게임</p>
+      <h1>스트리머 거리 맞추기</h1>
+      <p class="subtitle">두 스트리머가 몇 단계의 방송인 연결로 이어지는지 맞춰보세요.</p>
+    </section>
+
+    <section class="panel stats-panel">
+      <div><span class="label">현재 점수</span><strong id="score">0</strong></div>
+      <div><span class="label">최고 점수</span><strong id="bestScore">0</strong></div>
+      <div><span class="label">그래프 정보</span><strong id="graphStats">불러오는 중...</strong></div>
+    </section>
+
+    <section class="panel status-panel">
+      <span id="leaderboardMode">리더보드: 이 브라우저에만 저장</span>
+    </section>
+
+    <section class="panel game-panel">
+      <div class="streamer-row">
+        <article class="streamer-card">
+          <img id="startImage" alt="시작 스트리머 프로필 이미지" />
+          <h2 id="startName">불러오는 중...</h2>
+          <p id="startId"></p>
+        </article>
+
+        <div class="versus">
+          <span>→ ? →</span>
+          <small>몇 단계일까요?</small>
+        </div>
+
+        <article class="streamer-card">
+          <img id="targetImage" alt="목표 스트리머 프로필 이미지" />
+          <h2 id="targetName">불러오는 중...</h2>
+          <p id="targetId"></p>
+        </article>
+      </div>
+
+      <div class="guess-area">
+        <p>최단 연결 단계를 선택하세요.</p>
+        <div id="guessButtons" class="guess-buttons"></div>
+      </div>
+
+      <div id="message" class="message"></div>
+      <div id="pathBox" class="path-box hidden"></div>
+
+      <div class="actions">
+        <button id="newGameBtn" class="secondary">새 게임</button>
+      </div>
+    </section>
+
+    <section class="panel leaderboard-panel">
+      <div class="leaderboard-header">
+        <h2>TOP 5</h2>
+        <button id="clearScoresBtn" class="link-button">로컬 기록 삭제</button>
+      </div>
+      <ol id="leaderboard"></ol>
+      <p class="note">
+        Supabase 설정이 되어 있으면 전 세계 리더보드로 저장됩니다. 설정하지 않으면 이 브라우저에만 저장됩니다.
+      </p>
+    </section>
+  </main>
+
+  <dialog id="nameDialog">
+    <form method="dialog" id="nameForm">
+      <h2>TOP 5 진입!</h2>
+      <p>리더보드에 표시할 이름을 입력하세요.</p>
+      <input id="playerName" maxlength="20" placeholder="이름" autocomplete="off" />
+      <menu>
+        <button value="cancel" class="secondary">건너뛰기</button>
+        <button id="saveNameBtn" value="default">저장</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
