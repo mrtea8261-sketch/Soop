@@ -318,3 +318,7 @@ dialog menu {
   .versus { padding: 6px 0; }
   .path-track { align-items: flex-start; }
 }
+
+
+/* v2: game mode selector */
+.mode-buttons{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.select-controls{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end;margin-top:16px}.select-controls label{display:block;color:var(--muted);margin-bottom:6px;font-size:.88rem}.select-controls select{width:100%;padding:12px;border-radius:14px;border:1px solid var(--border);background:rgba(255,255,255,.08);color:var(--text)}.select-controls option{background:#15182a;color:var(--text)}@media(max-width:760px){.select-controls{grid-template-columns:1fr}}
