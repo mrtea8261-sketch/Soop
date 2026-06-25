@@ -1,8 +1,8 @@
 const DATA_URL = "data/soop_graph_undirected.json";
 const SCORE_KEY = "soop-distance-local-top5";
 const MIN_FOLLOWERS_TO_SHOW = 10000;
-const BLOCKED_IDS = new Set(["2omong"]);
-const BLOCKED_NICKS = new Set(["이오몽", "이오몽_"]);
+const BLOCKED_IDS = new Set(["x"]);
+const BLOCKED_NICKS = new Set(["x", "x"]);
 
 const state = { graph:null, nodes:[], nodesById:{}, adjacency:{}, currentRound:null, score:0, gameOver:false, animating:false, mode:"random", supabase:null, useSupabase:false };
 const el = {
@@ -34,13 +34,13 @@ function cleanGraph(raw){
 }
 function isAllowedNode(n){ if(!n) return false; if(BLOCKED_IDS.has(n.id)||BLOCKED_NICKS.has(n.nick)) return false; if(typeof n.followers==="number" && n.followers>0) return n.followers>=MIN_FOLLOWERS_TO_SHOW; return true; }
 function buildAdj(edges){ const a={}; for(const e of edges){ (a[e.a]??=[]).push(e.b); (a[e.b]??=[]).push(e.a); } for(const k of Object.keys(a)) a[k]=[...new Set(a[k])]; return a; }
-function setupSupabase(){ const url=window.SUPABASE_URL||"", key=window.SUPABASE_ANON_KEY||""; if(url&&key&&window.supabase?.createClient){ state.supabase=window.supabase.createClient(url,key); state.useSupabase=true; el.leaderboardMode.textContent="리더보드: Supabase 전 세계 기록"; el.clearScoresBtn.style.display="none"; } }
+function setupSupabase(){ const url=String(window.SUPABASE_URL||"").trim(), key=String(window.SUPABASE_ANON_KEY||"").trim(); if(url&&key&&window.supabase?.createClient){ state.supabase=window.supabase.createClient(url,key); state.useSupabase=true; if(el.leaderboardMode) el.leaderboardMode.textContent="세계 기록 연동 완료"; if(el.clearScoresBtn) el.clearScoresBtn.style.display="none"; } }
 function setMode(mode){ state.mode=mode; state.score=0; state.gameOver=false; state.animating=false; updateScoreDisplay(); hidePath(); el.randomModeBtn.classList.toggle("secondary", mode!=="random"); el.selectModeBtn.classList.toggle("secondary", mode!=="select"); el.selectControls.classList.toggle("hidden", mode!=="select"); if(mode==="random") nextRandomRound(); else { setMessage("두 스트리머를 선택한 뒤 ‘이 조합으로 시작’을 누르세요.",""); setGuessButtonsEnabled(false); renderPlaceholderStreamers(); } }
 function renderGuessButtons(){ el.guessButtons.innerHTML=""; [1,2,3,4,5,"6+"].forEach(v=>{ const b=document.createElement("button"); b.textContent=String(v); b.onclick=()=>submitGuess(v); el.guessButtons.appendChild(b); }); }
 function renderStreamerSelects(){ const sorted=[...state.nodes].sort((a,b)=>(a.nick||a.id).localeCompare(b.nick||b.id,"ko")); for(const s of [el.selectStart,el.selectTarget]){ s.innerHTML=""; for(const n of sorted){ const o=document.createElement("option"); o.value=n.id; o.textContent=`${n.nick||n.id} (${n.id})`; s.appendChild(o); } } if(sorted.length>=2){ el.selectStart.value=sorted[0].id; el.selectTarget.value=sorted[1].id; } }
 function startNewGame(){ state.score=0; state.gameOver=false; state.animating=false; updateScoreDisplay(); hidePath(); if(state.mode==="random") nextRandomRound(); else startSelectedRound(); }
-function nextRandomRound(){ setRound(makeRandomRound()); setMessage("최단 연결 단계를 맞춰보세요.",""); }
-function startSelectedRound(){ const s=el.selectStart.value, t=el.selectTarget.value; if(!s||!t||s===t){ setMessage("서로 다른 두 스트리머를 선택하세요.","bad"); setGuessButtonsEnabled(false); return; } const path=shortestPath(s,t); if(!path){ setMessage("두 스트리머 사이의 연결 경로가 없습니다.","bad"); setGuessButtonsEnabled(false); return; } setRound({start:state.nodesById[s],target:state.nodesById[t],path,distance:path.length-1}); setMessage("선택한 두 스트리머의 최단 연결 단계를 맞춰보세요.",""); }
+function nextRandomRound(){ setRound(makeRandomRound()); setMessage("몇 명을 통해야 닿을지 골라보세요.",""); }
+function startSelectedRound(){ const s=el.selectStart.value, t=el.selectTarget.value; if(!s||!t||s===t){ setMessage("서로 다른 두 스트리머를 선택하세요.","bad"); setGuessButtonsEnabled(false); return; } const path=shortestPath(s,t); if(!path){ setMessage("두 스트리머 사이의 연결 경로가 없습니다.","bad"); setGuessButtonsEnabled(false); return; } setRound({start:state.nodesById[s],target:state.nodesById[t],path,distance:path.length-1}); setMessage("몇 명을 통해야 닿을지 골라보세요.",""); }
 function setRound(r){ state.currentRound=r; state.gameOver=false; state.animating=false; renderStreamer("start",r.start); renderStreamer("target",r.target); hidePath(); setGuessButtonsEnabled(true); }
 function renderPlaceholderStreamers(){ const a=state.nodesById[el.selectStart.value]||state.nodes[0], b=state.nodesById[el.selectTarget.value]||state.nodes[1]||a; if(a) renderStreamer("start",a); if(b) renderStreamer("target",b); }
 function makeRandomRound(){ for(let i=0;i<500;i++){ const start=randomNode(), target=randomNode(); if(!start||!target||start.id===target.id) continue; const path=shortestPath(start.id,target.id); if(!path) continue; const d=path.length-1; if(d>=1&&d<=6) return {start,target,path,distance:d}; } throw new Error("연결된 스트리머 쌍을 찾지 못했습니다."); }
@@ -59,4 +59,4 @@ async function renderLeaderboard(){ const scores=await getScores(); el.leaderboa
 async function updateScoreDisplay(existingScores){ el.score.textContent=state.score; const scores=existingScores||await getScores(); el.bestScore.textContent=scores[0]?.score||0; }
 function escapeHtml(v){ return String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c])); }
 el.randomModeBtn.onclick=()=>setMode("random"); el.selectModeBtn.onclick=()=>setMode("select"); el.startSelectedBtn.onclick=startSelectedRound; el.selectStart.onchange=renderPlaceholderStreamers; el.selectTarget.onchange=renderPlaceholderStreamers; el.newGameBtn.onclick=startNewGame; el.clearScoresBtn.onclick=async()=>{ localStorage.removeItem(SCORE_KEY); await renderLeaderboard(); };
-init().catch(err=>{ console.error(err); setMessage("게임 데이터를 불러오지 못했습니다. 콘솔을 확인하세요.","bad"); });
+init().catch(err=>{ console.error(err); setMessage("불러오기에 실패했습니다. 콘솔을 확인하세요.","bad"); });
