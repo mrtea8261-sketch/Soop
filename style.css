@@ -781,3 +781,44 @@ dialog menu {
     min-width: 34px;
   }
 }
+
+
+/* Mode behavior: selection UI only appears in Select Mode */
+body[data-mode="random"] #selectControls {
+  display: none !important;
+}
+
+body[data-mode="select"] #selectControls {
+  display: grid;
+}
+
+body[data-mode="select"] #score {
+  color: var(--muted);
+}
+
+
+/* Fix: selection dropdown must stay hidden in random mode and when .hidden is applied */
+#selectControls.hidden {
+  display: none !important;
+}
+
+body[data-mode="random"] #selectControls {
+  display: none !important;
+}
+
+body[data-mode="select"] #selectControls:not(.hidden) {
+  display: grid !important;
+}
+
+
+/* Hard fix: select streamer dropdowns only appear in Select Mode */
+#selectControls,
+#selectControls.hidden,
+#selectControls[hidden],
+body[data-mode="random"] #selectControls {
+  display: none !important;
+}
+
+body[data-mode="select"] #selectControls:not(.hidden):not([hidden]) {
+  display: grid !important;
+}

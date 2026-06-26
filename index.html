@@ -6,10 +6,10 @@
   <title>숲 너와 나의 연결거리</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body data-mode="random">
   <main class="app">
     <section class="hero">
-      <p class="eyebrow">SOOP Streamer Version 0.5</p>
+      <p class="eyebrow">SOOP Streamer Version</p>
       <h1>너와 나의 연결거리</h1>
       <p class="subtitle">가깝지만 멀게 느껴지는 동료 스트리머, 얼마나 가까이 또는 멀리 있을지 맞춰보세요!</p>
     </section>
@@ -23,7 +23,7 @@
         <button id="randomModeBtn">랜덤 모드</button>
         <button id="selectModeBtn" class="secondary">선택 모드</button>
       </div>
-      <div id="selectControls" class="select-controls hidden">
+      <div id="selectControls" class="hidden select-controls hidden">
         <div><label for="selectStart">시작 스트리머</label><select id="selectStart"></select></div>
         <div><label for="selectTarget">목표 스트리머</label><select id="selectTarget"></select></div>
         <button id="startSelectedBtn">이 조합으로 시작</button>
