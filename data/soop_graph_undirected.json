@@ -23,13 +23,20 @@
       "x"
     ],
     "nodeCount": 204,
-    "edgeCount": 394,
-    "removedNicksByRequest": [
-    ],
+    "edgeCount": 395,
+    "removedNicksByRequest": [],
     "removedNodeCountByRequest": 0,
-    "notFoundFromRequest": [
-    ],
-    "notes": ""
+    "notFoundFromRequest": [],
+    "notes": "Manual edge added: 제갈금자 ↔ 누눙지.",
+    "manualEdges": [
+      {
+        "a": "dlsn9911",
+        "b": "kgoyangyeeee",
+        "aNick": "제갈금자",
+        "bNick": "누눙지",
+        "reason": "User requested 제갈금자 and 누눙지 to be connected manually."
+      }
+    ]
   },
   "nodes": [
     {
@@ -6071,6 +6078,12 @@
       "b": "yesrin21",
       "aNick": "기뉴다",
       "bNick": "네린NERIN"
+    },
+    {
+      "a": "dlsn9911",
+      "b": "kgoyangyeeee",
+      "aNick": "제갈금자",
+      "bNick": "누눙지"
     }
   ],
   "adjacency": {
@@ -7117,6 +7130,7 @@
       "maoruyakr"
     ],
     "dlsn9911": [
+      "kgoyangyeeee",
       "maoruyakr"
     ],
     "bboringirl": [
@@ -7241,6 +7255,9 @@
     ],
     "ch1716": [
       "yesrin21"
+    ],
+    "kgoyangyeeee": [
+      "dlsn9911"
     ]
   }
 }
