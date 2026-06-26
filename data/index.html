@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>숲 너와 나의 연결거리</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-mode="random">
+  <main class="app">
+    <section class="hero">
+      <p class="eyebrow">SOOP Streamer Version</p>
+      <h1>너와 나의 연결거리</h1>
+      <p class="subtitle">가깝지만 멀게 느껴지는 동료 스트리머, 얼마나 가까이 또는 멀리 있을지 맞춰보세요!</p>
+    </section>
+    <section class="panel stats-panel">
+      <div><span class="label">현재 점수</span><strong id="score">0</strong></div>
+      <div><span class="label">최고 점수</span><strong id="bestScore">0</strong></div>
+      <div><span class="label">참여 스트리머</span><strong id="graphStats">불러오는 중...</strong></div>
+    </section>
+<section class="panel mode-panel">
+      <div class="mode-buttons">
+        <button id="randomModeBtn">랜덤 모드</button>
+        <button id="selectModeBtn" class="secondary">선택 모드</button>
+      </div>
+      <div id="selectControls" class="hidden select-controls hidden">
+        <div><label for="selectStart">시작 스트리머</label><select id="selectStart"></select></div>
+        <div><label for="selectTarget">목표 스트리머</label><select id="selectTarget"></select></div>
+        <button id="startSelectedBtn">이 조합으로 시작</button>
+      </div>
+    </section>
+    <section class="panel game-panel">
+      <div class="streamer-row">
+        <article class="streamer-card"><img id="startImage" alt="시작 스트리머 프로필 이미지" /><h2 id="startName">불러오는 중...</h2><p id="startId"></p></article>
+        <div class="versus"><span>→ ? →</span><small>몇 단계?</small></div>
+        <article class="streamer-card"><img id="targetImage" alt="목표 스트리머 프로필 이미지" /><h2 id="targetName">불러오는 중...</h2><p id="targetId"></p></article>
+      </div>
+      <div class="guess-area"><p>몇 명을 통해야 닿을지 골라보세요.</p><div id="guessButtons" class="guess-buttons"></div></div>
+      <div id="message" class="message"></div><div id="pathBox" class="path-box hidden"></div>
+      <div class="actions"><button id="newGameBtn" class="secondary">새 게임</button></div>
+    </section>
+    <section class="panel leaderboard-panel">
+      <div class="leaderboard-header"><h2>TOP 5</h2><button id="clearScoresBtn" class="link-button">로컬 기록 삭제</button></div>
+      <ol id="leaderboard"></ol><p class="note">점수는 TOP 5 기록으로 저장됩니다.</p>
+    </section>
+  </main>
+  <dialog id="nameDialog"><form method="dialog" id="nameForm"><h2>TOP 5 진입!</h2><p>리더보드에 표시할 이름을 입력하세요.</p><input id="playerName" maxlength="20" placeholder="이름" autocomplete="off" /><menu><button value="cancel" class="secondary">건너뛰기</button><button id="saveNameBtn" value="default">저장</button></menu></form></dialog>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
