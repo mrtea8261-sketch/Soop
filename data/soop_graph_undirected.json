@@ -16,29 +16,16 @@
     "maxBranches": 5,
     "minFollowers": 10000,
     "followerField": "favorite_cnt",
-    "blockedIds": [
-      "x"
-    ],
     "blockedNicks": [
       "x"
     ],
-    "nodeCount": 204,
-    "edgeCount": 395,
+    "nodeCount": 208,
+    "edgeCount": 402,
     "removedNicksByRequest": [],
     "removedNodeCountByRequest": 0,
     "notFoundFromRequest": [],
-    "notes": "Manual edge added: 제갈금자 ↔ 누눙지.",
-    "manualEdges": [
-      {
-        "a": "dlsn9911",
-        "b": "kgoyangyeeee",
-        "aNick": "제갈금자",
-        "bNick": "누눙지",
-        "reason": "User requested 제갈금자 and 누눙지 to be connected manually."
-      }
-    ]
-  },
-  "nodes": [
+    "notes": "x",
+     "nodes": [
     {
       "id": "wnstn0905",
       "nick": "(주)박사장$",
@@ -326,6 +313,15 @@
       "followers": 28414,
       "favorite_cnt": 28414,
       "views": 7801264
+    },
+    {
+      "id": "rmlrl771",
+      "nick": "끠끼",
+      "search": "끠끼",
+      "profileImage": "https://profile.img.sooplive.com/LOGO/rm/rmlrl771/rmlrl771.jpg",
+      "followers": 68964,
+      "favorite_cnt": 68964,
+      "views": 22558717
     },
     {
       "id": "nanamoon777",
@@ -679,6 +675,15 @@
       "views": 23132920
     },
     {
+      "id": "spbabobj",
+      "nick": "머독",
+      "search": "머독",
+      "profileImage": "https://profile.img.sooplive.com/LOGO/sp/spbabobj/spbabobj.jpg",
+      "followers": 397559,
+      "favorite_cnt": 397559,
+      "views": 142932158
+    },
+    {
       "id": "duvl123",
       "nick": "모요",
       "search": "모요",
@@ -976,6 +981,15 @@
       "views": 63066655
     },
     {
+      "id": "kogo0512",
+      "nick": "수탉",
+      "search": "수탉",
+      "profileImage": "https://profile.img.sooplive.com/LOGO/ko/kogo0512/kogo0512.jpg",
+      "followers": 203424,
+      "favorite_cnt": 203424,
+      "views": 55235554
+    },
+    {
       "id": "lovely5959",
       "nick": "수피",
       "search": "수피",
@@ -1163,6 +1177,15 @@
       "followers": 330093,
       "favorite_cnt": 330093,
       "views": 118240911
+    },
+    {
+      "id": "nanajam",
+      "nick": "우정잉",
+      "search": "우정잉",
+      "profileImage": "https://profile.img.sooplive.com/LOGO/na/nanajam/nanajam.jpg",
+      "followers": 132187,
+      "favorite_cnt": 132187,
+      "views": 21383341
     },
     {
       "id": "bach023",
@@ -2165,6 +2188,15 @@
       "favorite_cnt": 28414,
       "views": 7801264
     },
+    "rmlrl771": {
+      "id": "rmlrl771",
+      "nick": "끠끼",
+      "search": "끠끼",
+      "profileImage": "https://profile.img.sooplive.com/LOGO/rm/rmlrl771/rmlrl771.jpg",
+      "followers": 68964,
+      "favorite_cnt": 68964,
+      "views": 22558717
+    },
     "nanamoon777": {
       "id": "nanamoon777",
       "nick": "나나문",
@@ -2516,6 +2548,15 @@
       "favorite_cnt": 70294,
       "views": 23132920
     },
+    "spbabobj": {
+      "id": "spbabobj",
+      "nick": "머독",
+      "search": "머독",
+      "profileImage": "https://profile.img.sooplive.com/LOGO/sp/spbabobj/spbabobj.jpg",
+      "followers": 397559,
+      "favorite_cnt": 397559,
+      "views": 142932158
+    },
     "duvl123": {
       "id": "duvl123",
       "nick": "모요",
@@ -2813,6 +2854,15 @@
       "favorite_cnt": 123968,
       "views": 63066655
     },
+    "kogo0512": {
+      "id": "kogo0512",
+      "nick": "수탉",
+      "search": "수탉",
+      "profileImage": "https://profile.img.sooplive.com/LOGO/ko/kogo0512/kogo0512.jpg",
+      "followers": 203424,
+      "favorite_cnt": 203424,
+      "views": 55235554
+    },
     "lovely5959": {
       "id": "lovely5959",
       "nick": "수피",
@@ -3001,6 +3051,15 @@
       "followers": 330093,
       "favorite_cnt": 330093,
       "views": 118240911
+    },
+    "nanajam": {
+      "id": "nanajam",
+      "nick": "우정잉",
+      "search": "우정잉",
+      "profileImage": "https://profile.img.sooplive.com/LOGO/na/nanajam/nanajam.jpg",
+      "followers": 132187,
+      "favorite_cnt": 132187,
+      "views": 21383341
     },
     "bach023": {
       "id": "bach023",
@@ -6084,6 +6143,48 @@
       "b": "kgoyangyeeee",
       "aNick": "제갈금자",
       "bNick": "누눙지"
+    },
+    {
+      "a": "kogo0512",
+      "b": "spbabobj",
+      "aNick": "수탉",
+      "bNick": "머독"
+    },
+    {
+      "a": "rmlrl771",
+      "b": "spbabobj",
+      "aNick": "끠끼",
+      "bNick": "머독"
+    },
+    {
+      "a": "nanajam",
+      "b": "spbabobj",
+      "aNick": "우정잉",
+      "bNick": "머독"
+    },
+    {
+      "a": "kogo0512",
+      "b": "rmlrl771",
+      "aNick": "수탉",
+      "bNick": "끠끼"
+    },
+    {
+      "a": "kogo0512",
+      "b": "nanajam",
+      "aNick": "수탉",
+      "bNick": "우정잉"
+    },
+    {
+      "a": "nanajam",
+      "b": "rmlrl771",
+      "aNick": "우정잉",
+      "bNick": "끠끼"
+    },
+    {
+      "a": "jingburger1",
+      "b": "spbabobj",
+      "aNick": "징버거☆",
+      "bNick": "머독"
     }
   ],
   "adjacency": {
@@ -6588,6 +6689,7 @@
       "gosegu2",
       "inehine",
       "lilpa0309",
+      "spbabobj",
       "toocat030",
       "viichan6"
     ],
@@ -7258,6 +7360,27 @@
     ],
     "kgoyangyeeee": [
       "dlsn9911"
+    ],
+    "kogo0512": [
+      "nanajam",
+      "rmlrl771",
+      "spbabobj"
+    ],
+    "spbabobj": [
+      "jingburger1",
+      "kogo0512",
+      "nanajam",
+      "rmlrl771"
+    ],
+    "rmlrl771": [
+      "kogo0512",
+      "nanajam",
+      "spbabobj"
+    ],
+    "nanajam": [
+      "kogo0512",
+      "rmlrl771",
+      "spbabobj"
     ]
   }
 }
