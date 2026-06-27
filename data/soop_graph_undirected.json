@@ -16,16 +16,10 @@
     "maxBranches": 5,
     "minFollowers": 10000,
     "followerField": "favorite_cnt",
-    "blockedNicks": [
-      "x"
-    ],
     "nodeCount": 208,
-    "edgeCount": 402,
-    "removedNicksByRequest": [],
-    "removedNodeCountByRequest": 0,
-    "notFoundFromRequest": [],
-    "notes": "x",
-     "nodes": [
+    "edgeCount": 402
+  },
+  "nodes": [
     {
       "id": "wnstn0905",
       "nick": "(주)박사장$",
